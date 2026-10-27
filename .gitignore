@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.log
+
+# Codex image-generation intermediates and browser test leftovers
+output/
+.playwright-cli/
+docs/reference/check-seams/
+
+# Awesome Lathusca demo is licensed for personal use only and may not be redistributed.
+# Download it yourself (see README) and keep it local.
+public/fonts/awesome-lathusca.*
+
+# Real personal photos stay off the repository.
+public/memories/real-*

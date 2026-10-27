@@ -1,0 +1,43 @@
+/*
+ * Ticket-code font from the invitation (Awesome Lathusca, free demo, personal use only).
+ * The demo has no Vietnamese and swaps punctuation for placeholder glyphs, so it is limited to
+ * plain A–Z, a–z, 0–9 and space; anything else falls through to the next font in the stack.
+ * A full Vietnamese version dropped in under the same name can widen this range.
+ */
+@font-face {
+  font-family: 'Awesome Lathusca';
+  src:
+    url('/fonts/awesome-lathusca.woff2') format('woff2'),
+    url('/fonts/awesome-lathusca.ttf') format('truetype');
+  unicode-range: U+0020, U+0030-0039, U+0041-005A, U+0061-007A;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f3efe8;
+  --paper-shade: #ede4da;
+  --brass: #d6b47e;
+  --brass-deep: #b8925a;
+  --brass-light: #e8d3ac;
+  --ink: #6b5a45;
+  --ink-soft: #8a7a66;
+  --ink-faint: #b5a893;
+  --night: #2b2520;
+  --flap-text: #f3e6c8;
+  --signal-red: #a8473a;
+
+  /* Vietnamese titles: closest Vietnamese-capable match to the invitation's thin serif. */
+  --font-display: 'Cormorant Garamond', 'Roboto', serif;
+  --font-code: 'Awesome Lathusca', 'Cormorant Garamond', serif;
+  --font-body: 'Roboto', system-ui, sans-serif;
+  --font-number: 'Roboto Condensed', 'Roboto', sans-serif;
+
+  --fs-display: 52px;
+  --fs-title: 40px;
+  --fs-label: 20px;
+  --fs-body: 22px;
+  --fs-table: 28px;
+
+  --ease-mech: cubic-bezier(0.22, 0.9, 0.3, 1);
+  --paper-texture: none;
+}

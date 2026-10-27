@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chuyến Tàu Ký Ức</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23F3EFE8'/%3E%3Cpath d='M10 44h40l4-6V24H38V16h-6v8H22v-6h-8v26z' fill='none' stroke='%23B8925A' stroke-width='3'/%3E%3Ccircle cx='20' cy='48' r='5' fill='%23D6B47E'/%3E%3Ccircle cx='40' cy='48' r='5' fill='%23D6B47E'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="viewport">
+      <div id="stage">
+        <!-- Scene -->
+        <div id="world"></div>
+        <div id="train-layer"></div>
+        <canvas id="fx"></canvas>
+        <div id="tunnel"><div class="headlight"></div></div>
+        <div id="time-tint"></div>
+
+        <!-- Header -->
+        <header id="header">
+          <div class="label">Chuyến tàu</div>
+          <h1 class="display" id="title"></h1>
+          <div class="subtitle" id="subtitle"></div>
+        </header>
+
+        <div id="board-slot"></div>
+        <aside id="leaderboard"></aside>
+
+        <!-- Bottom bar -->
+        <footer id="bottom-bar">
+          <div class="info-chip" id="info"></div>
+          <button class="depart-btn" id="depart" type="button">
+            <span class="depart-label">Khởi hành</span>
+            <span class="depart-hint">Space</span>
+          </button>
+          <div class="tool-btns">
+            <button class="tool-btn" id="btn-board" type="button" title="Bảng vinh danh (B)">B</button>
+            <button class="tool-btn" id="btn-mute" type="button" title="Tắt tiếng (M)">♪</button>
+            <button class="tool-btn" id="btn-full" type="button" title="Toàn màn hình (F)">⛶</button>
+            <button class="tool-btn" id="btn-settings" type="button" title="Cài đặt (S)">⚙</button>
+          </div>
+        </footer>
+
+        <!-- Overlays -->
+        <div id="celebrate"></div>
+        <div id="board-full"></div>
+        <div id="settings"></div>
+        <div id="dialog"></div>
+        <div id="boarding"></div>
+
+        <div class="grain-wrap"><canvas id="grain"></canvas></div>
+        <div class="vignette"></div>
+        <div id="fps"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

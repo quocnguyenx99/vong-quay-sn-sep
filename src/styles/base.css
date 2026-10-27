@@ -1,0 +1,165 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--night);
+}
+
+/* Fixed 1920x1080 design canvas scaled to fit (see main.ts). */
+#stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  overflow: hidden;
+  background-color: var(--paper);
+  background-image: var(--paper-texture);
+  background-size: 1024px;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Layers */
+#world,
+#train-layer,
+#fx,
+#tunnel,
+#time-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#world {
+  z-index: 1;
+}
+#train-layer {
+  z-index: 2;
+}
+#fx {
+  z-index: 3;
+  width: 1920px;
+  height: 1080px;
+}
+#tunnel {
+  z-index: 4;
+  background: var(--night);
+  opacity: 0;
+}
+/* Positioned at the lamp by director.ts: a halo plus a beam that widens ahead of the train. */
+#tunnel .headlight {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#tunnel .headlight::before {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: -120px;
+  top: -120px;
+  background: radial-gradient(circle, rgba(255, 244, 218, 0.95), rgba(255, 244, 218, 0.35) 30%, transparent 70%);
+}
+#tunnel .headlight::after {
+  content: '';
+  position: absolute;
+  width: 1000px;
+  height: 420px;
+  left: 0;
+  top: -210px;
+  clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 54%);
+  background: radial-gradient(ellipse 100% 50% at 0 50%, rgba(255, 244, 218, 0.6), rgba(255, 244, 218, 0.15) 60%, transparent 100%);
+}
+#time-tint {
+  z-index: 5;
+  background: #b8925a;
+  opacity: 0;
+}
+
+.grain-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.07;
+}
+#grain {
+  width: 100%;
+  height: 100%;
+}
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 71;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 58%, rgba(43, 37, 32, 0.32) 100%);
+}
+
+#fps {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 80;
+  font: 600 16px var(--font-number);
+  color: var(--signal-red);
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+  }
+}
