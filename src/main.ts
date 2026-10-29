@@ -61,7 +61,17 @@ boarding.innerHTML = `
       <span class="status">Đang chuẩn bị toa tàu…</span>
     </div>
   </div></div>`;
-boarding.querySelector('h1')!.textContent = store.config.title;
+const boardTitle = boarding.querySelector<HTMLElement>('h1')!;
+boardTitle.textContent = store.config.title;
+// Keep the title on one line: shrink the font until it fits the card (re-run once webfonts load).
+const fitBoardTitle = () => {
+  boardTitle.style.fontSize = '';
+  const base = parseFloat(getComputedStyle(boardTitle).fontSize);
+  const avail = boardTitle.parentElement!.clientWidth - 180;
+  if (boardTitle.scrollWidth > avail) boardTitle.style.fontSize = `${Math.max(36, (base * avail) / boardTitle.scrollWidth)}px`;
+};
+fitBoardTitle();
+void document.fonts.ready.then(fitBoardTitle);
 boarding.querySelector('.sub')!.textContent = store.config.subtitle;
 const boardBtn = boarding.querySelector<HTMLButtonElement>('button')!;
 const boardStatus = boarding.querySelector<HTMLElement>('.status')!;

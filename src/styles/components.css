@@ -946,8 +946,10 @@
   align-items: flex-start;
 }
 .boarding-card h1 {
-  font-size: 84px;
+  font-size: 76px;
   margin-top: 14px;
+  max-width: 100%;
+  white-space: nowrap;
 }
 .boarding-card .sub {
   margin-top: 16px;
