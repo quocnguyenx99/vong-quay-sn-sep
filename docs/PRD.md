@@ -60,9 +60,9 @@ Chi tiết storyboard: xem [concepts.md §Concept đã chọn](concepts.md).
 ## 5. Yêu cầu chức năng
 
 ### F1. Cấu hình dải số
-- F1.1 Nhập **số bắt đầu** và **số kết thúc** (số nguyên ≥ 0, bắt đầu ≤ kết thúc). Mặc định **001** → 200; số kết thúc cấu hình theo số vé đã phát.
+- F1.1 Nhập **số bắt đầu** và **số kết thúc** (số nguyên ≥ 0, bắt đầu ≤ kết thúc). Mặc định **001** → **220**; số kết thúc cấu hình theo số vé đã phát.
 - F1.4 Vé đặc biệt `ILOVENKC` (vé của chủ tiệc, `ve-tau-sn/1.png`) **không tham gia quay**.
-- F1.2 Hiển thị **zero-pad** theo độ dài số kết thúc (200 → 3 chữ số: `001`). Cho phép ghi đè số chữ số (VD luôn 3).
+- F1.2 Hiển thị **zero-pad** theo độ dài số kết thúc (220 → 3 chữ số: `001`). Cho phép ghi đè số chữ số (VD luôn 3).
 - F1.3 Không cho đổi dải khi đã có kết quả, trừ khi reset (có cảnh báo).
 
 ### F2. Quay số
@@ -73,8 +73,8 @@ Chi tiết storyboard: xem [concepts.md §Concept đã chọn](concepts.md).
 - F2.5 Khi hết số: nút bị khoá, hiện thông báo *"Tất cả hành khách đã lên tàu"*.
 
 ### F3. Thời lượng & hồi hộp (cấu hình được)
-- F3.1 **Thời gian tàu chạy** (giai đoạn chạy qua ký ức): 3–30s, mặc định 8s.
-- F3.2 **Thời gian quay số** (giai đoạn bảng lật + giảm tốc): 2–15s, mặc định 5s.
+- F3.1 **Thời gian tàu chạy** (giai đoạn chạy qua ký ức): 3–30s, mặc định 15s.
+- F3.2 **Thời gian quay số** (giai đoạn bảng lật + giảm tốc): 2–15s, mặc định 8s.
 - F3.3 Animation, âm thanh, tốc độ lật, mật độ khói **co giãn theo thời lượng** đã đặt.
 - F3.4 Hồi hộp tăng dần ở cuối: lật từng chữ số khoá lần lượt (trăm → chục → đơn vị), chữ số cuối lật chậm dần, nhịp trống/tim tăng.
 - F3.5 Tuỳ chọn **chế độ phanh tay**: bấm lần 2 (Space) để bắt đầu giai đoạn giảm tốc; nếu không bấm, tự phanh sau thời gian chạy tối đa.

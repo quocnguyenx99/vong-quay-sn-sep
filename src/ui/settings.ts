@@ -39,12 +39,16 @@ export class Settings {
       <div class="set-section"><div class="label">Dải số vé</div>
         <div class="set-grid">
           <label class="field">Số bắt đầu<input type="number" name="start" min="0" value="${c.start}" ${locked ? 'disabled' : ''}/></label>
-          <label class="field">Số kết thúc<input type="number" name="end" min="0" value="${c.end}" ${locked ? 'disabled' : ''}/></label>
+          <label class="field">Số kết thúc (số hành khách)<input type="number" name="end" min="0" value="${c.end}"/></label>
           <label class="field">Số chữ số hiển thị<input type="number" name="digits" min="0" max="6" value="${c.digits}" ${locked ? 'disabled' : ''}/>
             <span class="note">0 = tự động theo số kết thúc</span></label>
           <label class="field">Tiền tố mã vé<input type="text" name="prefix" value="${esc(c.prefix)}"/>
             <span class="note">VD: ${esc(ticketCode(c.prefix, c.start, store.digits))}</span></label>
-          ${locked ? '<span class="field full note">Đã có kết quả: muốn đổi dải số, hãy xoá kết quả trước.</span>' : ''}
+          ${
+            locked
+              ? `<span class="field full note">Đã có kết quả: vẫn đổi được số kết thúc (không nhỏ hơn ${padNumber(store.maxUsed ?? c.start, store.digits)}, tối đa ${store.digits} chữ số). Muốn đổi số bắt đầu hoặc số chữ số, hãy xoá kết quả trước.</span>`
+              : ''
+          }
         </div>
       </div>
 
@@ -149,6 +153,20 @@ export class Settings {
         return false;
       }
       Object.assign(patch, { start, end, digits });
+    } else {
+      const end = Number(f('end').value);
+      const floor = Math.max(store.config.start, store.maxUsed ?? store.config.start);
+      if (!Number.isInteger(end) || end < floor) {
+        err.textContent = `Số kết thúc phải là số nguyên ≥ ${padNumber(floor, store.digits)} (đã có vé được quay).`;
+        return false;
+      }
+      if (String(end).length > store.digits) {
+        err.textContent = `Đã có kết quả nên số kết thúc tối đa ${store.digits} chữ số. Muốn tăng thêm, hãy xoá kết quả trước.`;
+        return false;
+      }
+      patch.end = end;
+      // Keep already-drawn ticket codes padded the same way if a smaller end would shrink the auto width.
+      if (store.config.digits === 0) patch.digits = store.digits;
     }
     err.textContent = '';
     store.updateConfig(patch);

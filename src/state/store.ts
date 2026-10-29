@@ -42,7 +42,7 @@ const KEY = 'chuyen-tau-ky-uc/v1';
 
 export const DEFAULT_CONFIG: Config = {
   start: 1,
-  end: 200,
+  end: 220,
   digits: 0,
   prefix: 'ILOVEMRTHIET',
   title: 'Trở về những ký ức',
@@ -50,9 +50,16 @@ export const DEFAULT_CONFIG: Config = {
   messages: [
     'Bạn hãy cứ cất kỹ tấm vé của tháng năm này nhé, vì không có người soát vé trên chuyến đi đặc biệt này.',
     'Những năm tháng ấy sẽ luôn là kỷ niệm tươi đẹp của Người ấy và của chính các bạn.',
+    'Chuyến tàu ký ức hôm nay đã dừng ở ga của bạn. Chúc bạn luôn giữ được nụ cười hồn nhiên như thuở ấy.',
+    'Mỗi tấm vé là một trang ký ức. Chúc bạn có thật nhiều trang đẹp trên hành trình phía trước.',
+    'Còi tàu đã vang lên rồi! Chúc bạn một năm mới đủ đầy niềm vui và những chuyến đi thật ý nghĩa.',
+    'Hãy giữ tấm vé này như giữ lại một mùa tuổi thơ không bao giờ cũ.',
+    'Có những sân ga chỉ ghé qua một lần trong đời. Cảm ơn bạn đã cùng lên chuyến tàu đặc biệt này.',
+    'Chúc bạn luôn có những người bạn đồng hành tuyệt vời trên mọi chặng đường.',
+    'Tàu có thể đi xa, nhưng ký ức đẹp thì luôn ở lại. Chúc bạn mãi bình an và hạnh phúc.',
   ].join('\n'),
-  runSeconds: 8,
-  drawSeconds: 5,
+  runSeconds: 15,
+  drawSeconds: 8,
   brakeMode: 'auto',
   volume: 0.8,
   muted: false,
@@ -64,6 +71,25 @@ export const LIMITS = {
   /** In manual brake mode the train brakes on its own after this long. */
   manualMaxRunSeconds: 60,
 };
+
+/** Defaults shipped before; a saved value still equal to one of these was never customised. */
+const PREVIOUS_DEFAULTS: Partial<Config> = {
+  end: 200,
+  runSeconds: 8,
+  drawSeconds: 5,
+  messages: [
+    'Bạn hãy cứ cất kỹ tấm vé của tháng năm này nhé, vì không có người soát vé trên chuyến đi đặc biệt này.',
+    'Những năm tháng ấy sẽ luôn là kỷ niệm tươi đẹp của Người ấy và của chính các bạn.',
+  ].join('\n'),
+};
+
+function upgradeDefaults(saved: Partial<Config>): Partial<Config> {
+  const out = { ...saved };
+  for (const key of Object.keys(PREVIOUS_DEFAULTS) as (keyof Config)[]) {
+    if (out[key] === PREVIOUS_DEFAULTS[key]) delete out[key];
+  }
+  return out;
+}
 
 type Listener = () => void;
 
@@ -78,7 +104,7 @@ class Store {
       const raw = localStorage.getItem(KEY);
       if (!raw) return;
       const data = JSON.parse(raw) as Partial<Persisted>;
-      this.config = { ...DEFAULT_CONFIG, ...(data.config ?? {}) };
+      this.config = { ...DEFAULT_CONFIG, ...upgradeDefaults(data.config ?? {}) };
       this.results = Array.isArray(data.results) ? data.results : [];
       this.pending = data.pending ?? null;
     } catch {
@@ -119,6 +145,13 @@ class Store {
     const out: number[] = [];
     for (let n = this.config.start; n <= this.config.end; n++) if (!used.has(n)) out.push(n);
     return out;
+  }
+
+  /** Highest ticket already drawn or pending; the range end may not drop below it. */
+  get maxUsed(): number | null {
+    const used = this.results.map((r) => r.number);
+    if (this.pending) used.push(this.pending.number);
+    return used.length ? Math.max(...used) : null;
   }
 
   get rangeSize(): number {
